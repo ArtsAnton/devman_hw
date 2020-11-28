@@ -1,6 +1,6 @@
 # Скрипт - прогноз погоды
 
-Скрипт [https://github.com/ArtsAnton/devman_hw/blob/main/api/les_1/weather_forecast.py]() позволяет получать прогноз погоды и выводить результат в консоль.
+Скрипт [weather_forecast](https://github.com/ArtsAnton/devman_hw/blob/main/api/les_1/weather_forecast.py) позволяет получать прогноз погоды и выводить результат в консоль.
 
 Полезные ссылки:
 * [Python 3.6.9;](https://www.python.org/downloads/)
