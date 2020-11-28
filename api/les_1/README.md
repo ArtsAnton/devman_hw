@@ -18,4 +18,4 @@ python3 weather_forecast.py
 ``` 
 Пример работы кода:
 
-![weather forecast](https://www.python.org/downloads/)
+![weather forecast](https://github.com/ArtsAnton/devman_hw/blob/main/api/les_1/img/weather_forecast.png)
