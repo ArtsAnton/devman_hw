@@ -20,19 +20,16 @@ def count_clicks(user_url, url, headers):
 
 
 def check_domain(user_url, url, headers):
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    brend_domains = response.json()['bsds']
-    bitly_domains = ['https://bit.ly', 'http://bit.ly']
-    all_domains = bitly_domains + brend_domains
-    return any(user_url.startswith(domain) for domain in all_domains)
+    res = urlparse(user_url)
+    response = requests.get(url.format(res.netloc, res.path), headers=headers)
+    return response.ok
 
 
 def main():
     load_dotenv()
     url_for_gen_link = 'https://api-ssl.bitly.com/v4/bitlinks'
     url_for_count = 'https://api-ssl.bitly.com/v4/bitlinks/{}{}/clicks/summary'
-    url_for_check = 'https://api-ssl.bitly.com/v4/bsds'
+    url_for_check = 'https://api-ssl.bitly.com/v4/bitlinks/{}{}'
     headers = {'Authorization': 'Bearer {}'.format(os.getenv("API_TOKEN"))}
     user_url = input('Введите ссылку: ')
 
