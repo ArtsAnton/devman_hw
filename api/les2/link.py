@@ -19,7 +19,7 @@ def count_clicks(user_url, url, headers):
     return 'Количество переходов:', response.json()['total_clicks']
 
 
-def check_domain(user_url, url, headers):
+def is_bitlink(user_url, url, headers):
     res = urlparse(user_url)
     response = requests.get(url.format(res.netloc, res.path), headers=headers)
     return response.ok
@@ -34,7 +34,7 @@ def main():
     user_url = input('Введите ссылку: ')
 
     try:
-        if check_domain(user_url, url_for_check, headers):
+        if is_bitlink(user_url, url_for_check, headers):
             res = count_clicks(user_url, url_for_count, headers)
         else:
             res = shorten_link(user_url, url_for_gen_link, headers)
