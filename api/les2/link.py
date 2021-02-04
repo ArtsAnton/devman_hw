@@ -53,7 +53,7 @@ def main():
         else:
             res = shorten_link(user_url, url_for_gen_link, headers)
         print(*res)
-    except requests.exceptions.HTTPError as errolsr:
+    except requests.exceptions.HTTPError as error:
         sys.exit(error)
 
 
