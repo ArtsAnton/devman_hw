@@ -10,9 +10,38 @@
 * [Библиотека python-dotenv 0.15.0;](https://pypi.org/project/python-dotenv/)
 * [Документация bitly.com.](https://dev.bitly.com/)
 
-### Установка окружения:
+### Что необходимо для проекта:
+
+### 1. Установить python ([Ubuntu 18.04](https://releases.ubuntu.com/)):
+```bash
+sudo apt-get update
+sudo apt-get install python3.6
+```
+### 2. Установить virtualenv:
+```bash
+pip install virtualenv
+```
+### 3. Создать виртуальное окружение:
+```bash
+virtualenv venv
+```
+### 4. Активировать виртуальное окружение:
+```bash
+source venv/bin/activate
+```
+Для деактивация виртуального окружения необхоимо выполнить командуz:
+```bash
+deactivate
+```
+
+### 5. Установить виртуальное окружение:
 ```bash
 pip3 install -r requirements.txt
+```
+
+Также для работы необходимо создать файл .env для хранения токена [bitly.com.](https://dev.bitly.com/)
+```bash
+API_TOKEN=ebb...
 ```
 
 ### Запуск и пример работы кода:
@@ -20,6 +49,7 @@ pip3 install -r requirements.txt
 python3 link.py https://www.google.com/
 Битлинк: https://bit.ly/2XjsDfT
 ```
+ 
 
 ### Цель проекта
 
