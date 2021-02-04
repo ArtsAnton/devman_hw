@@ -1,9 +1,11 @@
-import requests
-from dotenv import load_dotenv
+import argparse
 import os
 import sys
+
+import requests
+
+from dotenv import load_dotenv
 from urllib.parse import urlparse
-import argparse
 
 
 def shorten_link(user_url, url, headers):
@@ -32,12 +34,9 @@ def is_bitlink(user_url, url, headers):
 def get_user_url():
     """The function returns the user's link."""
     parser = argparse.ArgumentParser()
-    parser.add_argument('url', nargs='?', help='user url')
+    parser.add_argument('user_url', help='user url for bitly')
     namespace = parser.parse_args()
-    if namespace.url is None:
-        sys.exit('Вы не ввели ссылку!')
-    else:
-        return namespace.url
+    return namespace.user_url
 
 
 def main():
@@ -54,7 +53,7 @@ def main():
         else:
             res = shorten_link(user_url, url_for_gen_link, headers)
         print(*res)
-    except requests.exceptions.HTTPError as error:
+    except requests.exceptions.HTTPError as errolsr:
         sys.exit(error)
 
 
