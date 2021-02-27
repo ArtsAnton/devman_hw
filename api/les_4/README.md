@@ -35,8 +35,11 @@ python3 spacex.py
 python3 hubble.py collection_name
 ```
 collection_name - имя коллекции фотографий hubble.
-6. Загружаем контент в Instagram;
 
+6. Загружаем контент в Instagram;
+```
+python3 download.py
+```
 ### Цель проекта
 
 Код написан в образовательных целях в рамках выполнения урока № 4 онлайн-курса для веб-разработчиков [devmn.org](https://dvmn.org/modules/).
