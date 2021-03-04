@@ -4,8 +4,9 @@
 
 
 Состав проекта:
-1. Файлы для генерации контента - [spacex.py](https://github.com/ArtsAnton/devman_hw/blob/main/api/les_4/spacex.py), [hubble.py](https://github.com/ArtsAnton/devman_hw/blob/main/api/les_4/hubble.py);
-2. Файл для загрузки контента в Instagram - [download.py](https://github.com/ArtsAnton/devman_hw/blob/main/api/les_4/download.py).
+1. скрипт для генерации контента - [spacex.py](https://github.com/ArtsAnton/devman_hw/blob/main/api/les_4/spacex.py), [hubble.py](https://github.com/ArtsAnton/devman_hw/blob/main/api/les_4/hubble.py);
+2. скрипт для загрузки контента в Instagram - [upload_imgs.py](https://github.com/ArtsAnton/devman_hw/blob/main/api/les_4/upload_imgs.py);
+3. скрипт содержащий вспомогательные функции - [utils.py](https://github.com/ArtsAnton/devman_hw/blob/main/api/les_4/utils.py).
 
 Полезные ссылки:
 

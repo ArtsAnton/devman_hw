@@ -6,15 +6,16 @@ from instabot import Bot
 from PIL import Image
 
 
-def create_img_to_dl(dir_img):
+def conv_ext_to_jpg(dir_img):
+    """The function converts the extension to jpg for all images in the directory."""
     for img in os.listdir(dir_img):
-        image = Image.open(f"image/{img}")
+        image = Image.open(f"{dir_img}/{img}")
         image.thumbnail((1080, 1080))
         if img.split(".")[1] != 'jpg':
-            image.save(f'image/{img.split(".")[0]}.jpg')
+            image.save(f'{dir_img}/{img.split(".")[0]}.jpg')
             os.remove(image.filename)
         else:
-            image.save(f'{image.filename}')
+            image.save(image.filename)
 
 
 def main():
@@ -25,10 +26,10 @@ def main():
               password=os.getenv("INST_PASSWORD")
               )
     dir_img = os.path.join(os.getcwd(), 'image')
-    create_img_to_dl(dir_img)
+    conv_ext_to_jpg(dir_img)
 
     for img in os.listdir(dir_img):
-        bot.upload_photo(f'image/{img}')
+        bot.upload_photo(f'{dir_img}/{img}')
         time.sleep(timeout)
 
 
