@@ -6,13 +6,14 @@ from instabot import Bot
 from PIL import Image
 
 
-def conv_ext_to_jpg(dir_img):
-    """The function converts the extension to jpg for all images in the directory."""
+def process_imgs(dir_img, size):
+    """The function processes all images in the directory before loading."""
     for img in os.listdir(dir_img):
         image = Image.open(f"{dir_img}/{img}")
-        image.thumbnail((1080, 1080))
-        if img.split(".")[1] != 'jpg':
-            image.save(f'{dir_img}/{img.split(".")[0]}.jpg')
+        image.thumbnail((size, size))
+        img_ext = os.path.splitext(img)[1]
+        if img_ext != '.jpg':
+            image.save(f'{dir_img}/{img}.jpg')
             os.remove(image.filename)
         else:
             image.save(image.filename)
@@ -21,12 +22,13 @@ def conv_ext_to_jpg(dir_img):
 def main():
     load_dotenv()
     timeout = 24 * 60 * 60
+    max_img_size = 1080
     bot = Bot()
     bot.login(username=os.getenv("INST_LOGIN"),
               password=os.getenv("INST_PASSWORD")
               )
     dir_img = os.path.join(os.getcwd(), 'image')
-    conv_ext_to_jpg(dir_img)
+    process_imgs(dir_img, max_img_size)
 
     for img in os.listdir(dir_img):
         bot.upload_photo(f'{dir_img}/{img}')
