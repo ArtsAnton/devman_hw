@@ -19,5 +19,9 @@ bot/les_1/.env
 bot/les_1/.idea
 bot/les_1/venv
 
-
+drf/les_1/.idea
+drf/les_1/venv
+drf/les_1/datacenter/__pycache__
+drf/les_1/datacenter/migrations/__pycache__
+drf/les_1/project/__pycache__
 
