@@ -1,4 +1,4 @@
-# Урок №4  курса [Знакомство с Django: ORM](https://dvmn.org/modules/django-orm/).
+# Урок №1  курса [Знакомство с Django: ORM](https://dvmn.org/modules/django-orm/).
 
 Учебный проект, моделирующий систему контроля доступа к хранилющу.
 
