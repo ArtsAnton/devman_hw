@@ -13,8 +13,8 @@ def get_links_last_launch(url):
     response = requests.get(url)
     response.raise_for_status()
     launch_data = response.json()
-    imgs = launch_data['links']['flickr']['original']
-    return imgs
+    links = launch_data['links']['flickr']['original']
+    return links
 
 
 def main():
