@@ -11,6 +11,7 @@ api/les_4/.env
 api/les_4/.idea
 api/les_4/venv
 api/les_4/image
+api/les_4/__pycache__/
 
 asyn/les_1/.idea
 asyn/venv
