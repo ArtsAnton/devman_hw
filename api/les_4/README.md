@@ -19,7 +19,11 @@
 
 Начало работы:
 1. Зарегистрируйтесь в [Instagram](https://www.instagram.com/);
-2. Создайте файл .env для хранения INST_PASSWORD='...' и INST_LOGIN='...';
+2. Создайте файл .env для хранения:
+   ```
+   INST_PASSWORD='...'
+   INST_LOGIN='...'
+   ```
 3. Подготовка к работе;
 
 ```
