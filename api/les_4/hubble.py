@@ -24,7 +24,7 @@ def get_img_link(url_template, img_id):
     hubble_response = requests.get(url)
     hubble_response.raise_for_status()
     img_data = hubble_response.json()
-    img_link = f'https:{img_data["image_files"][-1]["file_url"]}'
+    img_link = f"https:{img_data['image_files'][-1]['file_url']}"
     return img_link
 
 
@@ -38,12 +38,12 @@ def get_img_extension(link):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Download photos.')
-    parser.add_argument('collection', help='Hubble collection.')
+    parser = argparse.ArgumentParser(description="Download photos.")
+    parser.add_argument("collection", help="Hubble collection.")
     args = parser.parse_args()
 
-    url_template_for_img = 'http://hubblesite.org/api/v3/image/{}'
-    url_template_for_coll = 'http://hubblesite.org/api/v3/images/{}'
+    url_template_for_img = "http://hubblesite.org/api/v3/image/{}"
+    url_template_for_coll = "http://hubblesite.org/api/v3/images/{}"
     url_for_coll = url_template_for_coll.format(args.collection)
 
     img_dir = create_dir_for_img()
@@ -59,5 +59,5 @@ def main():
         logger.exception(error)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
