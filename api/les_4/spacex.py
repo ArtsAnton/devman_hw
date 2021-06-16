@@ -12,8 +12,8 @@ def get_links_last_launch(url):
     """The function returns a list of links (links for image) from the last spacex launch."""
     response = requests.get(url)
     response.raise_for_status()
-    launch_data = response.json()
-    links = launch_data["links"]["flickr"]["original"]
+    launch = response.json()
+    links = launch["links"]["flickr"]["original"]
     return links
 
 
