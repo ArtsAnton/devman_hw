@@ -32,8 +32,8 @@ def get_img_extension(link):
     """The function returns a image extension."""
     link = urllib.parse.unquote(link)
     path = urllib.parse.urlsplit(link).path
-    img_mane = os.path.split(path)[1]
-    img_extension = os.path.splitext(img_mane)[1]
+    img_name = os.path.split(path)[1]
+    img_extension = os.path.splitext(img_name)[1]
     return img_extension
 
 
