@@ -13,12 +13,12 @@ def get_links_last_launch(url):
     response = requests.get(url)
     response.raise_for_status()
     launch_data = response.json()
-    links = launch_data['links']['flickr']['original']
+    links = launch_data["links"]["flickr"]["original"]
     return links
 
 
 def main():
-    spacex_url = 'https://api.spacexdata.com/v4/launches/latest'
+    spacex_url = "https://api.spacexdata.com/v4/launches/latest"
     img_dir = create_dir_for_img()
 
     try:
@@ -31,5 +31,5 @@ def main():
         logger.exception(error)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
