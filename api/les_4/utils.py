@@ -3,9 +3,9 @@ import os
 import requests
 
 
-def create_dir_for_img():
+def create_dir_for_img(path=__file__):
     """Create dir if not exists. Return path for images."""
-    root = os.path.dirname(__file__)
+    root = os.path.dirname(path)
     new_path = os.path.join(root, "image")
     os.makedirs(new_path, exist_ok=True)
     return new_path
