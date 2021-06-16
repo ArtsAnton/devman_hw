@@ -12,8 +12,8 @@ def process_imgs(dir_img, size):
         image = Image.open(f"{dir_img}/{img}")
         image.thumbnail((size, size))
         img_ext = os.path.splitext(img)[1]
-        if img_ext != '.jpg':
-            image.save(f'{dir_img}/{img}.jpg')
+        if img_ext != ".jpg":
+            image.save(f"{dir_img}/{img}.jpg")
             os.remove(image.filename)
         else:
             image.save(image.filename)
@@ -27,13 +27,13 @@ def main():
     bot.login(username=os.getenv("INST_LOGIN"),
               password=os.getenv("INST_PASSWORD")
               )
-    dir_img = os.path.join(os.getcwd(), 'image')
+    dir_img = os.path.join(os.getcwd(), "image")
     process_imgs(dir_img, max_img_size)
 
     for img in os.listdir(dir_img):
-        bot.upload_photo(f'{dir_img}/{img}')
+        bot.upload_photo(f"{dir_img}/{img}")
         time.sleep(timeout)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
