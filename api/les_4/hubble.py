@@ -23,8 +23,8 @@ def get_img_link(url_template, img_id):
     url = url_template.format(img_id)
     hubble_response = requests.get(url)
     hubble_response.raise_for_status()
-    img_data = hubble_response.json()
-    img_link = f"https:{img_data['image_files'][-1]['file_url']}"
+    img = hubble_response.json()
+    img_link = f"https:{img['image_files'][-1]['file_url']}"
     return img_link
 
 
