@@ -2,7 +2,7 @@ import requests
 
 from terminaltables import AsciiTable
 
-import setings
+import settings
 
 
 def get_api_response(base_url, headers, payload, language, page, api_name):  # !!!!
@@ -91,15 +91,15 @@ def main():
     tables = str()
     for api in api_names:
         salary_statistics = get_salary_statistics(languages,
-                                                  base_url=setings.BASE_URLS[api],
-                                                  headers=setings.HEADERS[api],
-                                                  payload=setings.PAYLOAD[api],
+                                                  base_url=settings.BASE_URLS[api],
+                                                  headers=settings.HEADERS[api],
+                                                  payload=settings.PAYLOAD[api],
                                                   pages=pages,
                                                   per_page=per_page,
                                                   api_name=api,
-                                                  max_value=setings.MAX_VALUE_KEY[api],
-                                                  batch=setings.BATCH_VACANCIES_KEY[api])
-        tables += get_pivot_table_salaries(salary_statistics, title=setings.TABLE_TITLE[api]) + "\n"
+                                                  max_value=settings.MAX_VALUE_KEY[api],
+                                                  batch=settings.BATCH_VACANCIES_KEY[api])
+        tables += get_pivot_table_salaries(salary_statistics, title=settings.TABLE_TITLE[api]) + "\n"
     print(tables)
 
 
