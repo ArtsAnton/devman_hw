@@ -35,7 +35,7 @@ python3 main.py
 
 3. Пример работы кода.
 
-![table](https://github.com/ArtsAnton/devman_hw/tree/main/api/les_5/img/table.png)
+![table](https://github.com/ArtsAnton/devman_hw/blob/main/api/les_5/img/table.png)
 
 ### Цель проекта
 
