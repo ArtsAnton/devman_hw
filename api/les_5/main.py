@@ -1,3 +1,5 @@
+import logging
+
 import requests
 
 from terminaltables import AsciiTable
@@ -5,13 +7,17 @@ from terminaltables import AsciiTable
 import settings
 
 
-def get_api_response(base_url, headers, payload, language, page, api_name):  # !!!!
+logger = logging.getLogger(__file__)
+
+
+def get_api_response(base_url, headers, payload, language, page, api_name):
     if api_name == "hh":
         payload["text"] = language
     else:
         payload["keyword"] = language
     payload["page"] = page
     response = requests.get(base_url, headers=headers, params=payload)
+    response.raise_for_status()
     return response.json()
 
 
@@ -67,13 +73,16 @@ def get_salary_statistics(languages, base_url, headers, payload, pages, per_page
         page = 0
         tmp_storage_vacancies = []
         while page < pages:
-            api_response = get_api_response(base_url=base_url,
-                                            headers=headers,
-                                            payload=payload,
-                                            language=language,
-                                            page=page,
-                                            api_name=api_name)
-            tmp_storage_vacancies.extend(api_response[batch])
+            try:
+                api_response = get_api_response(base_url=base_url,
+                                                headers=headers,
+                                                payload=payload,
+                                                language=language,
+                                                page=page,
+                                                api_name=api_name)
+                tmp_storage_vacancies.extend(api_response[batch])
+            except requests.HTTPError as error:
+                logger.exception(error)
             if per_page * page > api_response[max_value]:
                 break
             page += 1
