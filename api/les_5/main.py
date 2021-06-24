@@ -43,14 +43,11 @@ def predict_rub_salary_for_sj(vacancy):
     return None
 
 
-def get_aver_salary_metrics(vacancies, api_name):
+def get_aver_salary_metrics(vacancies, predict_rub_salary):
     vacancies_processed = 0
     current_salary_sum = 0
     for vacancy in vacancies:
-        if api_name == "hh":
-            salary = predict_rub_salary_for_hh(vacancy=vacancy)
-        else:
-            salary = predict_rub_salary_for_sj(vacancy=vacancy)
+        salary = predict_rub_salary(vacancy=vacancy)
         if salary:
             current_salary_sum += salary
             vacancies_processed += 1
@@ -66,7 +63,7 @@ def get_pivot_table_salaries(salaries, title):
     return table.table
 
 
-def get_salary_statistics(languages, base_url, headers, payload, pages, per_page, api_name, max_value, batch):
+def get_salary_statistics(languages, base_url, headers, payload, pages, per_page, api_name, api_func, max_value, batch):
     salary_statistics = dict()
     for language in languages:
         page = 0
@@ -85,7 +82,7 @@ def get_salary_statistics(languages, base_url, headers, payload, pages, per_page
             if per_page * page > api_response[max_value]:
                 break
             page += 1
-        aver_salary_metrics = get_aver_salary_metrics(vacancies=tmp_storage_vacancies, api_name=api_name)
+        aver_salary_metrics = get_aver_salary_metrics(tmp_storage_vacancies, api_func)
         salary_statistics[language] = {"vacancies_found": api_response[max_value],
                                        "average_salary": f"{aver_salary_metrics['aver_salary']}",
                                        "vacancies_processed": f"{aver_salary_metrics['vac_proc']}"}
@@ -95,7 +92,7 @@ def get_salary_statistics(languages, base_url, headers, payload, pages, per_page
 def main():
     languages = ["Java", "Php", "Python", "Scala", "Swift", "Kotlin", "C++", "JavaScript", "C#"]
     pages, per_page = 20, 100
-    api_names = ["hh", "sj"]
+    api_names = {"hh": predict_rub_salary_for_hh, "sj": predict_rub_salary_for_sj}
     tables = str()
     for api in api_names:
         salary_statistics = get_salary_statistics(languages,
@@ -105,6 +102,7 @@ def main():
                                                   pages=pages,
                                                   per_page=per_page,
                                                   api_name=api,
+                                                  api_func=api_names[api],
                                                   max_value=settings.MAX_VALUE_KEY[api],
                                                   batch=settings.BATCH_VACANCIES_KEY[api])
         tables += get_pivot_table_salaries(salary_statistics, title=settings.TABLE_TITLE[api]) + "\n"
