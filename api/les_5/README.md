@@ -1,11 +1,12 @@
-# Урок №5  курса ["API веб-сервисов"](https://dvmn.org/modules/web-api/). 
+# Урок №5  курса ["API веб-сервисов"](https://dvmn.org/modules/web-api/)
 
 Настоящий проект позволяет провести сравнение среднего уровня заработной платы для разработчиков в Москве.
 
 
 Проект использует следуюшие Api:
 1. [Api hh.ru](https://github.com/hhru/api);
-2. [Api SuperJob.ru](https://api.superjob.ru/);
+2. [Api SuperJob.ru](https://api.superjob.ru/).
+
 Для работы с [Api SuperJob.ru](https://api.superjob.ru/) необходимо пройти регистрацию и получить token доступа.
 
 
