@@ -102,49 +102,49 @@ def main():
     load_dotenv()
     languages = ["Java", "Php", "Python", "Scala", "Swift", "Kotlin", "C++", "JavaScript", "C#"]
     pages, per_page = 20, 100
-    hh = {"base_urls": "https://api.hh.ru/vacancies/",
-          "payload": {"specialization": "1.221",
+
+    hh_url = "https://api.hh.ru/vacancies/"
+    hh_payload = {"specialization": "1.221",
                       "page": "0",
                       "per_page": "100",
                       "area": "1",
                       "period": "30",
-                      "text": "language"},
-          "headers": {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-                                    "Chrome/80.0.3987.163 Safari/537.36"},
-          "title": "HeadHunter Moscow"
-          }
-    sj = {"base_urls": "https://api.superjob.ru/2.0/vacancies/",
-          "payload": {"catalogues": "48",
-                      "town": "4",
-                      "period": "1",
-                      "page": "0",
-                      "count": "100",
-                      "keyword": "language"},
-          "headers": {"X-Api-App-Id": os.getenv("SJ_TOKEN")},
-          "title": "SuperJob Moscow"
-          }
+                      "text": "language"}
+    hh_headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                                "Chrome/80.0.3987.163 Safari/537.36"}
+    hh_title = "HeadHunter Moscow"
+
+    sj_url = "https://api.superjob.ru/2.0/vacancies/"
+    sj_payload = {"catalogues": "48",
+                  "town": "4",
+                  "period": "1",
+                  "page": "0",
+                  "count": "100",
+                  "keyword": "language"}
+    sj_headers = {"X-Api-App-Id": os.getenv("SJ_TOKEN")}
+    sj_title = "SuperJob Moscow"
 
     salary_statistics_hh, salary_statistics_sj = dict(), dict()
     for language in languages:
-        hh["payload"]["text"], sj["payload"]["keyword"] = language, language
+        hh_payload["text"], sj_payload["keyword"] = language, language
         try:
-            salary_statistics_hh[language] = get_salary_statistics_hh(base_url=hh["base_urls"],
-                                                                      headers=hh["headers"],
-                                                                      payload=hh["payload"],
+            salary_statistics_hh[language] = get_salary_statistics_hh(base_url=hh_url,
+                                                                      headers=hh_headers,
+                                                                      payload=hh_payload,
                                                                       pages=pages,
                                                                       per_page=per_page,
                                                                       api_func=predict_rub_salary_for_hh)
 
-            salary_statistics_sj[language] = get_salary_statistics_sj(base_url=sj["base_urls"],
-                                                                      headers=sj["headers"],
-                                                                      payload=sj["payload"],
+            salary_statistics_sj[language] = get_salary_statistics_sj(base_url=sj_url,
+                                                                      headers=sj_headers,
+                                                                      payload=sj_payload,
                                                                       pages=pages,
                                                                       per_page=per_page,
                                                                       api_func=predict_rub_salary_for_sj)
         except requests.HTTPError as error:
             logger.exception(error)
-    tables = get_pivot_table_salaries(salary_statistics_hh, title=hh["title"]) + "\n" + \
-             get_pivot_table_salaries(salary_statistics_sj, title=sj["title"])
+    tables = get_pivot_table_salaries(salary_statistics_hh, title=hh_title) + "\n" + \
+             get_pivot_table_salaries(salary_statistics_sj, title=sj_title)
     print(tables)
 
 
