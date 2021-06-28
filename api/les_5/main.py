@@ -62,17 +62,17 @@ def get_pivot_table_salaries(salaries, title):
 
 
 def get_salary_statistics_hh(base_url, headers, payload, pages, per_page, api_func):
-    page = 0
+    payload["page"] = 0
     tmp_storage_vacancies = []
-    while page < pages:
-        payload["page"] = page
+    while payload["page"] < pages:
+
         api_response = get_api_response(base_url=base_url,
                                         headers=headers,
                                         payload=payload)
         tmp_storage_vacancies.extend(api_response["items"])
-        if per_page * page > api_response["found"]:
+        if per_page * payload["page"] > api_response["found"]:
             break
-        page += 1
+        payload["page"] += 1
     average_salary, vacancies_processed = get_aver_salary_metrics(tmp_storage_vacancies, api_func)
     salary_statistics = {"vacancies_found": api_response["found"],
                          "average_salary": average_salary,
