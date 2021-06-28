@@ -120,7 +120,7 @@ def main():
                       "page": "0",
                       "count": "100",
                       "keyword": "language"},
-          "headers": {"X-Api-App-Id": os.getenv("SECRET_KEY")},
+          "headers": {"X-Api-App-Id": os.getenv("SJ_TOKEN")},
           "title": "SuperJob Moscow"
           }
 
