@@ -51,11 +51,11 @@ def get_aver_salary_metrics(vacancies, predict_rub_salary):
 
 
 def get_pivot_table_salaries(salaries, title):
-    table_data = [["Язык программирования", "Вакансий найдено", "Вакансий обработано", "Средняя зарплата"]]
+    table = [["Язык программирования", "Вакансий найдено", "Вакансий обработано", "Средняя зарплата"]]
     for key, value in salaries.items():
-        table_data.append([key, value["vacancies_found"], value["vacancies_processed"], value["average_salary"]])
-    table = AsciiTable(table_data, title)
-    return table.table
+        table.append([key, value["vacancies_found"], value["vacancies_processed"], value["average_salary"]])
+    pivot_table = AsciiTable(table, title)
+    return pivot_table.table
 
 
 def get_salary_statistics_hh(base_url, headers, payload, pages, per_page, api_func):
