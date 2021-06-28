@@ -50,7 +50,7 @@ def get_aver_salary_metrics(vacancies, predict_rub_salary):
         average_salary = int(current_salary_sum/vacancies_processed)
     else:
         average_salary = 0
-    return {"aver_salary": average_salary, "vac_proc": vacancies_processed}
+    return average_salary, vacancies_processed
 
 
 def get_pivot_table_salaries(salaries, title):
@@ -73,10 +73,10 @@ def get_salary_statistics_hh(base_url, headers, payload, pages, per_page, api_fu
         if per_page * page > api_response["found"]:
             break
         page += 1
-    aver_salary_metrics = get_aver_salary_metrics(tmp_storage_vacancies, api_func)
+    average_salary, vacancies_processed = get_aver_salary_metrics(tmp_storage_vacancies, api_func)
     salary_statistics = {"vacancies_found": api_response["found"],
-                         "average_salary": f"{aver_salary_metrics['aver_salary']}",
-                         "vacancies_processed": f"{aver_salary_metrics['vac_proc']}"}
+                         "average_salary": average_salary,
+                         "vacancies_processed": vacancies_processed}
     return salary_statistics
 
 
@@ -91,10 +91,10 @@ def get_salary_statistics_sj(base_url, headers, payload, api_func):
         if not api_response["more"]:
             break
         payload["page"] += 1
-    aver_salary_metrics = get_aver_salary_metrics(tmp_storage_vacancies, api_func)
+    average_salary, vacancies_processed = get_aver_salary_metrics(tmp_storage_vacancies, api_func)
     salary_statistics = {"vacancies_found": api_response["total"],
-                         "average_salary": f"{aver_salary_metrics['aver_salary']}",
-                         "vacancies_processed": f"{aver_salary_metrics['vac_proc']}"}
+                         "average_salary": average_salary,
+                         "vacancies_processed": vacancies_processed}
     return salary_statistics
 
 
