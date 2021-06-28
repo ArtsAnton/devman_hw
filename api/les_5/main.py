@@ -80,17 +80,17 @@ def get_salary_statistics_hh(base_url, headers, payload, pages, per_page, api_fu
     return salary_statistics
 
 
-def get_salary_statistics_sj(base_url, headers, payload, pages, per_page, api_func):
-    page = 0
+def get_salary_statistics_sj(base_url, headers, payload, api_func):
     tmp_storage_vacancies = []
-    while page < pages:
+    payload["page"] = 0
+    while True:
         api_response = get_api_response(base_url=base_url,
                                         headers=headers,
                                         payload=payload)
         tmp_storage_vacancies.extend(api_response["objects"])
-        if per_page * page > api_response["total"]:
+        if not api_response["more"]:
             break
-        page += 1
+        payload["page"] += 1
     aver_salary_metrics = get_aver_salary_metrics(tmp_storage_vacancies, api_func)
     salary_statistics = {"vacancies_found": api_response["total"],
                          "average_salary": f"{aver_salary_metrics['aver_salary']}",
@@ -138,8 +138,6 @@ def main():
             salary_statistics_sj[language] = get_salary_statistics_sj(base_url=sj_url,
                                                                       headers=sj_headers,
                                                                       payload=sj_payload,
-                                                                      pages=pages,
-                                                                      per_page=per_page,
                                                                       api_func=predict_rub_salary_for_sj)
         except requests.HTTPError as error:
             logger.exception(error)
