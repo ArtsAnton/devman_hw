@@ -104,20 +104,26 @@ def main():
     load_dotenv()
     languages = ["Java", "Php", "Python", "Scala", "Swift", "Kotlin", "C++", "JavaScript", "C#"]
     pages, per_page = 20, 100
-    
+
     hh_url = "https://api.hh.ru/vacancies/"
-    hh_payload = {"specialization": "1.221",
+    hh_specialization = 1.221
+    hh_area = 1
+    hh_period = 30
+    hh_payload = {"specialization": hh_specialization,
                   "per_page": per_page,
-                  "area": "1",
-                  "period": "30"}
+                  "area": hh_area,
+                  "period": hh_period}
     hh_headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
                                 "Chrome/80.0.3987.163 Safari/537.36"}
     hh_title = "HeadHunter Moscow"
 
     sj_url = "https://api.superjob.ru/2.0/vacancies/"
-    sj_payload = {"catalogues": "48",
-                  "town": "4",
-                  "period": "1",
+    sj_catalogues = 48
+    sj_town = 4
+    sj_period = 1
+    sj_payload = {"catalogues": sj_catalogues,
+                  "town": sj_town,
+                  "period": sj_period,
                   "count": per_page}
     sj_headers = {"X-Api-App-Id": os.getenv("SJ_TOKEN")}
     sj_title = "SuperJob Moscow"
