@@ -62,17 +62,18 @@ def get_salary_statistics_table(statistics, title):
 
 
 def get_salary_statistics_hh(base_url, headers, payload, pages, per_page, api_func):
-    payload["page"] = 0
+    hh_payload = {**payload}
+    hh_payload["page"] = 0
     tmp_storage_vacancies = []
-    while payload["page"] < pages:
+    while hh_payload["page"] < pages:
 
         api_response = get_api_response(base_url=base_url,
                                         headers=headers,
-                                        payload=payload)
+                                        payload=hh_payload)
         tmp_storage_vacancies.extend(api_response["items"])
-        if per_page * payload["page"] > api_response["found"]:
+        if per_page * hh_payload["page"] > api_response["found"]:
             break
-        payload["page"] += 1
+        hh_payload["page"] += 1
     average_salary, vacancies_processed = get_aver_salary_metrics(tmp_storage_vacancies, api_func)
     salary_statistics = {"vacancies_found": api_response["found"],
                          "average_salary": average_salary,
@@ -81,16 +82,17 @@ def get_salary_statistics_hh(base_url, headers, payload, pages, per_page, api_fu
 
 
 def get_salary_statistics_sj(base_url, headers, payload, api_func):
+    sj_payload = {**payload}
     tmp_storage_vacancies = []
-    payload["page"] = 0
+    sj_payload["page"] = 0
     while True:
         api_response = get_api_response(base_url=base_url,
                                         headers=headers,
-                                        payload=payload)
+                                        payload=sj_payload)
         tmp_storage_vacancies.extend(api_response["objects"])
         if not api_response["more"]:
             break
-        payload["page"] += 1
+        sj_payload["page"] += 1
     average_salary, vacancies_processed = get_aver_salary_metrics(tmp_storage_vacancies, api_func)
     salary_statistics = {"vacancies_found": api_response["total"],
                          "average_salary": average_salary,
@@ -102,7 +104,7 @@ def main():
     load_dotenv()
     languages = ["Java", "Php", "Python", "Scala", "Swift", "Kotlin", "C++", "JavaScript", "C#"]
     pages, per_page = 20, 100
-
+    
     hh_url = "https://api.hh.ru/vacancies/"
     hh_payload = {"specialization": "1.221",
                   "per_page": per_page,
