@@ -50,10 +50,13 @@ def get_aver_salary_metrics(vacancies, predict_rub_salary):
     return average_salary, vacancies_processed
 
 
-def get_pivot_table_salaries(salaries, title):
+def get_salary_statistics_table(statistics, title):
     table = [["Язык программирования", "Вакансий найдено", "Вакансий обработано", "Средняя зарплата"]]
-    for key, value in salaries.items():
-        table.append([key, value["vacancies_found"], value["vacancies_processed"], value["average_salary"]])
+    for language, stat in statistics.items():
+        table.append([language,
+                      stat["vacancies_found"],
+                      stat["vacancies_processed"],
+                      stat["average_salary"]])
     pivot_table = AsciiTable(table, title)
     return pivot_table.table
 
@@ -102,11 +105,9 @@ def main():
 
     hh_url = "https://api.hh.ru/vacancies/"
     hh_payload = {"specialization": "1.221",
-                      "page": "0",
-                      "per_page": "100",
-                      "area": "1",
-                      "period": "30",
-                      "text": "language"}
+                  "per_page": "100",
+                  "area": "1",
+                  "period": "30"}
     hh_headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
                                 "Chrome/80.0.3987.163 Safari/537.36"}
     hh_title = "HeadHunter Moscow"
@@ -115,9 +116,7 @@ def main():
     sj_payload = {"catalogues": "48",
                   "town": "4",
                   "period": "1",
-                  "page": "0",
-                  "count": "100",
-                  "keyword": "language"}
+                  "count": "100"}
     sj_headers = {"X-Api-App-Id": os.getenv("SJ_TOKEN")}
     sj_title = "SuperJob Moscow"
 
@@ -138,8 +137,8 @@ def main():
                                                                       api_func=predict_rub_salary_for_sj)
         except requests.HTTPError as error:
             logger.exception(error)
-    tables = get_pivot_table_salaries(salary_statistics_hh, title=hh_title) + "\n" + \
-             get_pivot_table_salaries(salary_statistics_sj, title=sj_title)
+    tables = get_salary_statistics_table(salary_statistics_hh, title=hh_title) + "\n" + \
+             get_salary_statistics_table(salary_statistics_sj, title=sj_title)
     print(tables)
 
 
