@@ -105,7 +105,7 @@ def main():
 
     hh_url = "https://api.hh.ru/vacancies/"
     hh_payload = {"specialization": "1.221",
-                  "per_page": "100",
+                  "per_page": per_page,
                   "area": "1",
                   "period": "30"}
     hh_headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -116,7 +116,7 @@ def main():
     sj_payload = {"catalogues": "48",
                   "town": "4",
                   "period": "1",
-                  "count": "100"}
+                  "count": per_page}
     sj_headers = {"X-Api-App-Id": os.getenv("SJ_TOKEN")}
     sj_title = "SuperJob Moscow"
 
