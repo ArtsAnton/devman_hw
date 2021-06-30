@@ -61,7 +61,7 @@ def get_salary_statistics_table(statistics, title):
     return pivot_table.table
 
 
-def get_salary_statistics_hh(base_url, headers, payload, pages, per_page, api_func):
+def get_salary_statistics_hh(base_url, headers, payload, pages, api_func):
     hh_payload = {**payload}
     hh_payload["page"] = 0
     tmp_storage_vacancies = []
@@ -71,7 +71,7 @@ def get_salary_statistics_hh(base_url, headers, payload, pages, per_page, api_fu
                                         headers=headers,
                                         payload=hh_payload)
         tmp_storage_vacancies.extend(api_response["items"])
-        if per_page * hh_payload["page"] > api_response["found"]:
+        if hh_payload["page"] == api_response["pages"]:
             break
         hh_payload["page"] += 1
     average_salary, vacancies_processed = get_aver_salary_metrics(tmp_storage_vacancies, api_func)
@@ -136,7 +136,6 @@ def main():
                                                                       headers=hh_headers,
                                                                       payload=hh_payload,
                                                                       pages=pages,
-                                                                      per_page=per_page,
                                                                       api_func=predict_rub_salary_for_hh)
 
             salary_statistics_sj[language] = get_salary_statistics_sj(base_url=sj_url,
