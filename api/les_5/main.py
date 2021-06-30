@@ -57,8 +57,7 @@ def get_salary_statistics_table(statistics, title):
                       stat["vacancies_found"],
                       stat["vacancies_processed"],
                       stat["average_salary"]])
-    pivot_table = AsciiTable(table, title)
-    return pivot_table.table
+    return AsciiTable(table, title).table
 
 
 def get_salary_statistics_hh(base_url, headers, payload, pages, api_func):
