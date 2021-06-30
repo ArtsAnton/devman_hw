@@ -46,7 +46,7 @@ def get_aver_salary_metrics(vacancies, predict_rub_salary):
         if salary:
             current_salary_sum += salary
             vacancies_processed += 1
-    average_salary = int(current_salary_sum/vacancies_processed) if vacancies_processed != 0 else 0
+    average_salary = int(current_salary_sum / vacancies_processed) if vacancies_processed else 0
     return average_salary, vacancies_processed
 
 
