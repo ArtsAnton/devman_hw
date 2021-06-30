@@ -105,23 +105,23 @@ def main():
     pages, per_page = 20, 100
 
     hh_url = "https://api.hh.ru/vacancies/"
-    hh_specialization = 1.221
-    hh_area = 1
+    hh_profession_id = 1.221
+    hh_moscow_id = 1
     hh_period = 30
-    hh_payload = {"specialization": hh_specialization,
+    hh_payload = {"specialization": hh_profession_id,
                   "per_page": per_page,
-                  "area": hh_area,
+                  "area": hh_moscow_id,
                   "period": hh_period}
     hh_headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
                                 "Chrome/80.0.3987.163 Safari/537.36"}
     hh_title = "HeadHunter Moscow"
 
     sj_url = "https://api.superjob.ru/2.0/vacancies/"
-    sj_catalogues = 48
-    sj_town = 4
-    sj_period = 1
-    sj_payload = {"catalogues": sj_catalogues,
-                  "town": sj_town,
+    sj_profession_id = 48
+    sj_moscow_id = 4
+    sj_period = 0
+    sj_payload = {"catalogues": sj_profession_id,
+                  "town": sj_moscow_id,
                   "period": sj_period,
                   "count": per_page}
     sj_headers = {"X-Api-App-Id": os.getenv("SJ_TOKEN")}
@@ -143,8 +143,8 @@ def main():
                                                                       api_func=predict_rub_salary_for_sj)
         except requests.HTTPError as error:
             logger.exception(error)
-    tables = get_salary_statistics_table(salary_statistics_hh, title=hh_title) + "\n" + \
-             get_salary_statistics_table(salary_statistics_sj, title=sj_title)
+    tables = f"{get_salary_statistics_table(salary_statistics_hh, title=hh_title)} \n " \
+             f"{get_salary_statistics_table(salary_statistics_sj, title=sj_title)}"
     print(tables)
 
 
