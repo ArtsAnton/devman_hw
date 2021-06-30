@@ -19,7 +19,7 @@
 
 Состав проекта:
 1. [main.py](https://github.com/ArtsAnton/devman_hw/tree/main/api/les_5/main.py) - основной файл;
-2. [settings.py](https://github.com/ArtsAnton/devman_hw/tree/main/api/les_5/settings.py) - файл содержащий информацию для запросов (headers, payload и т.д).
+2. [requirements.txt ](https://github.com/ArtsAnton/devman_hw/tree/main/api/les_5/requirements.txt) - зависимости.
 
 Начало работы:
 1. Подготовка к работе;
