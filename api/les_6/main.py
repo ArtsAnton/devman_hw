@@ -28,6 +28,7 @@ def download_img(url, img_path):
     response = requests.get(url)
     response.raise_for_status()
     path = urllib.parse.urlsplit(url).path
+    path = urllib.parse.unquote(path, encoding='utf-8')
     img_name = os.path.split(path)[1]
     with open(os.path.join(img_path, img_name), "wb") as f:
         f.write(response.content)
