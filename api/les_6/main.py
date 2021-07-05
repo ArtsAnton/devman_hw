@@ -32,7 +32,7 @@ def download_img(url, img_path):
     return img_name
 
 
-def get_number_imgs(url):
+def get_last_comic_number(url):
     response = requests.get(url)
     response.raise_for_status()
     return response.json()["num"]
@@ -107,7 +107,7 @@ def main():
     img_dir = "image"
 
     try:
-        number_imgs = get_number_imgs(xkcd_url)
+        number_imgs = get_last_comic_number(xkcd_url)
         random_num = randint(1, number_imgs)
 
         img_path = create_dir_for_img(img_dir)
