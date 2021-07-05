@@ -1,5 +1,6 @@
 import logging
 import os
+import shutil
 import urllib
 
 import requests
@@ -8,7 +9,7 @@ from random import randint
 
 from dotenv import load_dotenv
 
-
+import time
 def create_dir_for_img(dirname, path=__file__):
     root = os.path.dirname(path)
     new_path = os.path.join(root, dirname)
@@ -56,7 +57,6 @@ def upload_img_wall(url, group_id, dir, img_name):
         files = {"photo": file}
         response = requests.post(url, params=payload, files=files)
     response.raise_for_status()
-    os.remove(f"{dir}/{img_name}")
     return response.json()
 
 
@@ -134,6 +134,8 @@ def main():
         log.info("Add new post: {}.".format(post_id))
     except requests.HTTPError as error:
         log.exception(error)
+    finally:
+        shutil.rmtree(img_path)
 
 
 if __name__ == "__main__":
