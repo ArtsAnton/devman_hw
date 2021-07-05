@@ -112,8 +112,8 @@ def main():
         number_of_comics = get_last_comic_number()
 
         img_path = create_dir_for_img(img_dir)
-        img = get_random_comic(number_of_comics)
-        img_title, img_url = img["title"], img["img"]
+        random_comic = get_random_comic(number_of_comics)
+        img_title, img_url = random_comic["title"], random_comic["img"]
         img_name = download_img(img_url, img_path)
 
         upload_url = get_url_for_upload(vk_api_base_url, vk_group_id, vk_token, vk_api_version)
