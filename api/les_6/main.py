@@ -16,8 +16,9 @@ def create_dir_for_img(dirname, path=__file__):
     return new_path
 
 
-def get_img(url, number):
-    response = requests.get(url.format(number))
+def get_random_comic(url, number):
+    random_num = randint(1, number)
+    response = requests.get(url.format(random_num))
     response.raise_for_status()
     return response.json()
 
@@ -107,11 +108,10 @@ def main():
     img_dir = "image"
 
     try:
-        number_imgs = get_last_comic_number(xkcd_url)
-        random_num = randint(1, number_imgs)
+        number_of_comics = get_last_comic_number(xkcd_url)
 
         img_path = create_dir_for_img(img_dir)
-        img = get_img(xkcd_template_url, random_num)
+        img = get_random_comic(xkcd_template_url, number_of_comics)
         img_title, img_url = img["title"], img["img"]
         img_name = download_img(img_url, img_path)
 
