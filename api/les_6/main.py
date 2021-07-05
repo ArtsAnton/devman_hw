@@ -29,6 +29,7 @@ def download_img(url, img_path):
     img_name = os.path.split(path)[1]
     with open(os.path.join(img_path, img_name), "wb") as f:
         f.write(response.content)
+    return img_name
 
 
 def get_number_imgs(url):
@@ -45,9 +46,8 @@ def get_url_for_upload(base_url, group_id, token, api_version):
     return response.json()["response"]["upload_url"]
 
 
-def upload_img_wall(url, group_id, dir):
+def upload_img_wall(url, group_id, dir, img_name):
     payload = {"group_id": group_id}
-    img_name = os.listdir(dir)[0]
     with open(f"{dir}/{img_name}", "rb") as file:
         files = {"photo": file}
         response = requests.post(url, params=payload, files=files)
@@ -113,10 +113,10 @@ def main():
         img_path = create_dir_for_img(img_dir)
         img = get_img(xkcd_template_url, random_num)
         img_title, img_url = img["title"], img["img"]
-        download_img(img_url, img_path)
+        img_name = download_img(img_url, img_path)
 
         upload_url = get_url_for_upload(vk_api_base_url, vk_group_id, vk_token, vk_api_version)
-        upload_attr = upload_img_wall(upload_url, vk_group_id, img_path)
+        upload_attr = upload_img_wall(upload_url, vk_group_id, img_path, img_name)
         save_attr = save_wall_img(vk_api_base_url, vk_group_id, vk_token, vk_api_version, upload_attr)
 
         media_id = save_attr["response"][0]["id"]
