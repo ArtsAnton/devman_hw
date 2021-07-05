@@ -9,14 +9,6 @@ from random import randint
 from dotenv import load_dotenv
 
 
-logger = logging.getLogger(__file__)
-logger.setLevel(logging.INFO)
-handler = logging.StreamHandler()
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-
-
 def create_dir_for_img(path=__file__):
     root = os.path.dirname(path)
     new_path = os.path.join(root, "image")
@@ -90,8 +82,19 @@ def add_post(url, group_id, msg, post, owner_id, media_id, token, api_version):
     return response.json()["response"]["post_id"]
 
 
+def logger():
+    logger = logging.getLogger(__file__)
+    logger.setLevel(logging.INFO)
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    return logger
+
+
 def main():
     load_dotenv()
+    log = logger()
 
     vk_token = os.getenv("VK_TOKEN")
     vk_api_version = 5.131
@@ -125,9 +128,9 @@ def main():
                            media_id,
                            vk_token,
                            vk_api_version)
-        logger.info("Add new post: {}.".format(post_id))
+        log.info("Add new post: {}.".format(post_id))
     except requests.HTTPError as error:
-        logger.exception(error)
+        log.exception(error)
 
 
 if __name__ == "__main__":
