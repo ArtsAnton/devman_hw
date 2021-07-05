@@ -16,9 +16,10 @@ def create_dir_for_img(dirname, path=__file__):
     return new_path
 
 
-def get_random_comic(url, number):
-    random_num = randint(1, number)
-    response = requests.get(url.format(random_num))
+def get_random_comic(max_value):
+    xkcd_template_url = "http://xkcd.com/{}/info.0.json"
+    random_num = randint(1, max_value)
+    response = requests.get(xkcd_template_url.format(random_num))
     response.raise_for_status()
     return response.json()
 
@@ -33,8 +34,9 @@ def download_img(url, img_path):
     return img_name
 
 
-def get_last_comic_number(url):
-    response = requests.get(url)
+def get_last_comic_number():
+    xkcd_url = "http://xkcd.com/info.0.json"
+    response = requests.get(xkcd_url)
     response.raise_for_status()
     return response.json()["num"]
 
@@ -103,15 +105,13 @@ def main():
     vk_api_base_url = "https://api.vk.com/method/{}"
     vk_add_post = 1
 
-    xkcd_url = "http://xkcd.com/info.0.json"
-    xkcd_template_url = "http://xkcd.com/{}/info.0.json"
     img_dir = "image"
 
     try:
-        number_of_comics = get_last_comic_number(xkcd_url)
+        number_of_comics = get_last_comic_number()
 
         img_path = create_dir_for_img(img_dir)
-        img = get_random_comic(xkcd_template_url, number_of_comics)
+        img = get_random_comic(number_of_comics)
         img_title, img_url = img["title"], img["img"]
         img_name = download_img(img_url, img_path)
 
