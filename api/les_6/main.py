@@ -9,9 +9,9 @@ from random import randint
 from dotenv import load_dotenv
 
 
-def create_dir_for_img(path=__file__):
+def create_dir_for_img(dirname, path=__file__):
     root = os.path.dirname(path)
-    new_path = os.path.join(root, "image")
+    new_path = os.path.join(root, dirname)
     os.makedirs(new_path, exist_ok=True)
     return new_path
 
@@ -22,7 +22,7 @@ def get_img(url, number):
     return response.json()
 
 
-def download_img2(url, img_path):
+def download_img(url, img_path):
     response = requests.get(url)
     response.raise_for_status()
     path = urllib.parse.urlsplit(url).path
@@ -101,17 +101,19 @@ def main():
     vk_group_id = int(os.getenv("VK_GROUP"))
     vk_api_base_url = "https://api.vk.com/method/{}"
     vk_add_post = 1
+
     xkcd_url = "http://xkcd.com/info.0.json"
     xkcd_template_url = "http://xkcd.com/{}/info.0.json"
+    img_dir = "image"
 
     try:
         number_imgs = get_number_imgs(xkcd_url)
         random_num = randint(1, number_imgs)
 
-        img_path = create_dir_for_img()
+        img_path = create_dir_for_img(img_dir)
         img = get_img(xkcd_template_url, random_num)
         img_title, img_url = img["title"], img["img"]
-        download_img2(img_url, img_path)
+        download_img(img_url, img_path)
 
         upload_url = get_url_for_upload(vk_api_base_url, vk_group_id, vk_token, vk_api_version)
         upload_attr = upload_img_wall(upload_url, vk_group_id, img_path)
