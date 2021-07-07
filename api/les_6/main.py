@@ -9,7 +9,7 @@ from random import randint
 
 from dotenv import load_dotenv
 
-import time
+
 def create_dir_for_img(dirname, path=__file__):
     root = os.path.dirname(path)
     new_path = os.path.join(root, dirname)
