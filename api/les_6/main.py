@@ -60,12 +60,12 @@ def upload_img_wall(url, group_id, dir, img_name):
     return response.json()
 
 
-def save_wall_img(url, group_id, token, api_version, attr):
+def save_wall_img(url, group_id, token, api_version, attr_photo, attr_server, attr_hash):
     api_method = "photos.saveWallPhoto"
     payloads = {"group_id": group_id,
-                "photo": attr["photo"],
-                "server": attr["server"],
-                "hash": attr["hash"],
+                "photo": attr_photo,
+                "server": attr_server,
+                "hash": attr_hash,
                 "access_token": token,
                 "v": api_version}
     response = requests.get(url.format(api_method), params=payloads)
@@ -118,7 +118,7 @@ def main():
 
         upload_url = get_url_for_upload(vk_api_base_url, vk_group_id, vk_token, vk_api_version)
         upload_attr = upload_img_wall(upload_url, vk_group_id, img_path, img_name)
-        save_attr = save_wall_img(vk_api_base_url, vk_group_id, vk_token, vk_api_version, upload_attr)
+        save_attr = save_wall_img(vk_api_base_url, vk_group_id, vk_token, vk_api_version, **upload_attr)
 
         media_id = save_attr["response"][0]["id"]
         owner_id = save_attr["response"][0]["owner_id"]
