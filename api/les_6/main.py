@@ -60,12 +60,12 @@ def upload_img_wall(url, group_id, dir, img_name):
     return response.json()
 
 
-def save_wall_img(url, group_id, token, api_version, attr_photo, attr_server, attr_hash):
+def save_wall_img(url, group_id, token, api_version, photo, server, hash):
     api_method = "photos.saveWallPhoto"
     payloads = {"group_id": group_id,
-                "photo": attr_photo,
-                "server": attr_server,
-                "hash": attr_hash,
+                "photo": photo,
+                "server": server,
+                "hash": hash,
                 "access_token": token,
                 "v": api_version}
     response = requests.get(url.format(api_method), params=payloads)
