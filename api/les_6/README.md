@@ -7,8 +7,17 @@
 1. [Хkcd.com](https://xkcd.com/json.html) - контент для загрузки;
 2. [Api vk.com](https://vk.com/dev).
 
-Для работы с [vk.com](https://vk.com) Ван необходимо получить [token](https://vk.com/dev/implicit_flow_user) доступа и зарегистрировать группу в [vk.com](https://vk.com).
+Для работы с [vk.com](https://vk.com) Вам необходимо получить [token](https://vk.com/dev/implicit_flow_user) доступа и зарегистрировать группу в [vk.com](https://vk.com),
+а также создать файл .env для хранения этих переменных.
+Содержимое файла .env:
+   ```
+   VK_GROUP='...'
+   VK_TOKEN='...'
+   ```
 
+Процесс получения токена доступа изложен в [документации](https://vk.com/dev/implicit_flow_user). Запрос токена должен проводиться с учетом следующего:
+1. параметр scope должен содержать следующие права доступа - scope=photos,groups,wall,offline;
+2. параметр redirect_uri передавать не надо.
 Библиотеки используемые в проекте:
 
 * [Библиотека requests](https://requests.readthedocs.io/en/master/user/install/#install);
