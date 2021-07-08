@@ -18,6 +18,7 @@
 Процесс получения токена доступа изложен в [документации](https://vk.com/dev/implicit_flow_user). Запрос токена должен проводиться с учетом следующего:
 1. параметр scope должен содержать следующие права доступа - scope=photos,groups,wall,offline;
 2. параметр redirect_uri передавать не надо.
+    
 Библиотеки используемые в проекте:
 
 * [Библиотека requests](https://requests.readthedocs.io/en/master/user/install/#install);
