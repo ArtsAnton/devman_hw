@@ -38,7 +38,7 @@ def download_img(url, img_path):
     response = requests.get(url)
     response.raise_for_status()
     path = urllib.parse.urlsplit(url).path
-    path = urllib.parse.unquote(path, encoding='utf-8')
+    path = urllib.parse.unquote(path, encoding="utf-8")
     img_name = os.path.split(path)[1]
     with open(os.path.join(img_path, img_name), "wb") as f:
         f.write(response.content)
@@ -124,11 +124,9 @@ def main():
     vk_who_upload = 1
 
     img_dir = "image"
-
+    img_path = create_dir_for_img(img_dir)
     try:
         number_of_comics = get_last_comic_number()
-
-        img_path = create_dir_for_img(img_dir)
         random_comic = get_random_comic(number_of_comics)
         img_title, img_url = random_comic["title"], random_comic["img"]
         img_name = download_img(img_url, img_path)
