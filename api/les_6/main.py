@@ -52,9 +52,10 @@ def get_url_for_upload(base_url, group_id, token, api_version):
     payloads = {"group_id": group_id, "access_token": token, "v": api_version}
     response = requests.get(base_url.format(api_method), payloads)
     response.raise_for_status()
-    if response.json().get("error"):
-        raise VkApiError(response.json()["error"]["error_msg"])
-    return response.json()["response"]["upload_url"]
+    url = response.json()
+    if url.get("error"):
+        raise VkApiError(url["error"]["error_msg"])
+    return url["response"]["upload_url"]
 
 
 def upload_img_wall(url, group_id, dir, img_name):
@@ -63,9 +64,10 @@ def upload_img_wall(url, group_id, dir, img_name):
         files = {"photo": file}
         response = requests.post(url, params=payload, files=files)
     response.raise_for_status()
-    if response.json().get("error"):
-        raise VkApiError(response.json()["error"]["error_msg"])
-    return response.json()
+    upload_attr = response.json()
+    if upload_attr.get("error"):
+        raise VkApiError(upload_attr["error"]["error_msg"])
+    return upload_attr
 
 
 def save_wall_img(url, group_id, token, api_version, photo, server, hash):
@@ -78,9 +80,10 @@ def save_wall_img(url, group_id, token, api_version, photo, server, hash):
                 "v": api_version}
     response = requests.get(url.format(api_method), params=payloads)
     response.raise_for_status()
-    if response.json().get("error"):
-        raise VkApiError(response.json()["error"]["error_msg"])
-    return response.json()
+    save_attr = response.json()
+    if save_attr.get("error"):
+        raise VkApiError(save_attr["error"]["error_msg"])
+    return save_attr
 
 
 def add_post(url, group_id, msg, post, owner_id, media_id, token, api_version):
@@ -93,9 +96,10 @@ def add_post(url, group_id, msg, post, owner_id, media_id, token, api_version):
                 "v": api_version}
     response = requests.get(url.format(api_method), params=payloads)
     response.raise_for_status()
-    if response.json().get("error"):
-        raise VkApiError(response.json()["error"]["error_msg"])
-    return response.json()["response"]["post_id"]
+    new_post = response.json()
+    if new_post.get("error"):
+        raise VkApiError(new_post["error"]["error_msg"])
+    return new_post["response"]["post_id"]
 
 
 def get_logger():
