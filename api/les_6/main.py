@@ -130,11 +130,11 @@ def main():
         img_name = download_img(img_url, img_path)
 
         upload_url = get_url_for_upload(vk_api_base_url, vk_group_id, vk_token, vk_api_version)
-        upload_attr = upload_img_wall(upload_url, vk_group_id, img_path, img_name)
-        save_attr = save_wall_img(vk_api_base_url, vk_group_id, vk_token, vk_api_version, upload_attr)
+        upload_attrs = upload_img_wall(upload_url, vk_group_id, img_path, img_name)
+        save_attrs = save_wall_img(vk_api_base_url, vk_group_id, vk_token, vk_api_version, upload_attrs)
 
-        media_id = save_attr["response"][0]["id"]
-        owner_id = save_attr["response"][0]["owner_id"]
+        media_id = save_attrs["response"][0]["id"]
+        owner_id = save_attrs["response"][0]["owner_id"]
 
         post_id = add_post(vk_api_base_url,
                            vk_group_id,
