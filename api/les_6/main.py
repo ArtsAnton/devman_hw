@@ -26,9 +26,9 @@ def create_dir_for_img(dirname, path=__file__):
     return new_path
 
 
-def get_random_comic(max_value):
+def get_random_comic(last_comic):
     xkcd_template_url = "http://xkcd.com/{}/info.0.json"
-    random_num = randint(1, max_value)
+    random_num = randint(1, last_comic)
     response = requests.get(xkcd_template_url.format(random_num))
     response.raise_for_status()
     return response.json()
