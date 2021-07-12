@@ -14,6 +14,11 @@ class VkApiError(Exception):
     pass
 
 
+def check_vk_api_error(api_response):
+    if api_response.get("error"):
+        raise VkApiError(api_response["error"]["error_msg"])
+
+
 def create_dir_for_img(dirname, path=__file__):
     root = os.path.dirname(path)
     new_path = os.path.join(root, dirname)
@@ -53,8 +58,7 @@ def get_url_for_upload(base_url, group_id, token, api_version):
     response = requests.get(base_url.format(api_method), payloads)
     response.raise_for_status()
     url = response.json()
-    if url.get("error"):
-        raise VkApiError(url["error"]["error_msg"])
+    check_vk_api_error(url)
     return url["response"]["upload_url"]
 
 
@@ -65,8 +69,7 @@ def upload_img_wall(url, group_id, dir, img_name):
         response = requests.post(url, params=payload, files=files)
     response.raise_for_status()
     upload_attr = response.json()
-    if upload_attr.get("error"):
-        raise VkApiError(upload_attr["error"]["error_msg"])
+    check_vk_api_error(upload_attr)
     return upload_attr
 
 
@@ -81,8 +84,7 @@ def save_wall_img(url, group_id, token, api_version, photo, server, hash):
     response = requests.get(url.format(api_method), params=payloads)
     response.raise_for_status()
     save_attr = response.json()
-    if save_attr.get("error"):
-        raise VkApiError(save_attr["error"]["error_msg"])
+    check_vk_api_error(save_attr)
     return save_attr
 
 
@@ -97,8 +99,7 @@ def add_post(url, group_id, msg, post, owner_id, media_id, token, api_version):
     response = requests.get(url.format(api_method), params=payloads)
     response.raise_for_status()
     new_post = response.json()
-    if new_post.get("error"):
-        raise VkApiError(new_post["error"]["error_msg"])
+    check_vk_api_error(new_post)
     return new_post["response"]["post_id"]
 
 
