@@ -98,7 +98,7 @@ def add_post(url, group_id, msg, post, owner_id, media_id, token, api_version):
     return response.json()["response"]["post_id"]
 
 
-def logger():
+def get_logger():
     logger = logging.getLogger(__file__)
     logger.setLevel(logging.INFO)
     handler = logging.StreamHandler()
@@ -110,7 +110,7 @@ def logger():
 
 def main():
     load_dotenv()
-    log = logger()
+    log = get_logger()
 
     vk_token = os.getenv("VK_TOKEN")
     vk_api_version = 5.131
