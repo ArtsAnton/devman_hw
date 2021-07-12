@@ -88,11 +88,11 @@ def save_wall_img(url, group_id, token, api_version, photo, server, hash):
     return save_attr
 
 
-def add_post(url, group_id, msg, post, owner_id, media_id, token, api_version):
+def add_post(url, group_id, msg, sender, owner_id, media_id, token, api_version):
     api_method = "wall.post"
-    payloads = {"owner_id": group_id*(-1),
+    payloads = {"owner_id": -1 * group_id,
                 "message": msg,
-                "from_group": post,
+                "from_group": sender,
                 "attachments": f"type{owner_id}_{media_id}",
                 "access_token": token,
                 "v": api_version}
@@ -121,7 +121,7 @@ def main():
     vk_api_version = 5.131
     vk_group_id = int(os.getenv("VK_GROUP"))
     vk_api_base_url = "https://api.vk.com/method/{}"
-    vk_add_post = 1
+    vk_who_upload = 1
 
     img_dir = "image"
 
@@ -143,7 +143,7 @@ def main():
         post_id = add_post(vk_api_base_url,
                            vk_group_id,
                            img_title,
-                           vk_add_post,
+                           vk_who_upload,
                            owner_id,
                            media_id,
                            vk_token,
