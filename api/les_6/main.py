@@ -73,12 +73,14 @@ def upload_img_wall(url, group_id, path, img_name):
     return upload_attrs
 
 
-def save_wall_img(url, group_id, token, api_version, upload_attrs):
+def save_wall_img(url, group_id, token, api_version, photo, server, hash):
     api_method = "photos.saveWallPhoto"
     payloads = {"group_id": group_id,
                 "access_token": token,
                 "v": api_version,
-                **upload_attrs}
+                "photo": photo,
+                "server": server,
+                "hash": hash}
     response = requests.get(url.format(api_method), params=payloads)
     response.raise_for_status()
     save_attrs = response.json()
@@ -119,7 +121,6 @@ def main():
     vk_api_version = 5.131
     vk_group_id = int(os.getenv("VK_GROUP"))
     vk_api_base_url = "https://api.vk.com/method/{}"
-    from_group = True
 
     img_dir = "image"
     img_path = create_dir_for_img(img_dir)
@@ -131,7 +132,7 @@ def main():
 
         upload_url = get_url_for_upload(vk_api_base_url, vk_group_id, vk_token, vk_api_version)
         upload_attrs = upload_img_wall(upload_url, vk_group_id, img_path, img_name)
-        save_attrs = save_wall_img(vk_api_base_url, vk_group_id, vk_token, vk_api_version, upload_attrs)
+        save_attrs = save_wall_img(vk_api_base_url, vk_group_id, vk_token, vk_api_version, **upload_attrs)
 
         media_id = save_attrs["response"][0]["id"]
         owner_id = save_attrs["response"][0]["owner_id"]
@@ -143,7 +144,7 @@ def main():
                            media_id,
                            vk_token,
                            vk_api_version,
-                           from_group=from_group)
+                           from_group=True)
         log.info("Add new post: {}.".format(post_id))
     except requests.HTTPError as error:
         log.error(error)
