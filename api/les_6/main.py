@@ -68,22 +68,22 @@ def upload_img_wall(url, group_id, path, img_name):
         files = {"photo": file}
         response = requests.post(url, params=payload, files=files)
     response.raise_for_status()
-    upload_attr = response.json()
-    check_vk_api_error(upload_attr)
-    return upload_attr
+    upload_attrs = response.json()
+    check_vk_api_error(upload_attrs)
+    return upload_attrs
 
 
-def save_wall_img(url, group_id, token, api_version, upload_attr):
+def save_wall_img(url, group_id, token, api_version, upload_attrs):
     api_method = "photos.saveWallPhoto"
     payloads = {"group_id": group_id,
                 "access_token": token,
                 "v": api_version,
-                **upload_attr}
+                **upload_attrs}
     response = requests.get(url.format(api_method), params=payloads)
     response.raise_for_status()
-    save_attr = response.json()
-    check_vk_api_error(save_attr)
-    return save_attr
+    save_attrs = response.json()
+    check_vk_api_error(save_attrs)
+    return save_attrs
 
 
 def add_post(url, group_id, msg, sender, owner_id, media_id, token, api_version):
