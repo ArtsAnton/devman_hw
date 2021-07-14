@@ -62,9 +62,9 @@ def get_url_for_upload(base_url, group_id, token, api_version):
     return url["response"]["upload_url"]
 
 
-def upload_img_wall(url, group_id, dir, img_name):
+def upload_img_wall(url, group_id, path, img_name):
     payload = {"group_id": group_id}
-    with open(f"{dir}/{img_name}", "rb") as file:
+    with open(f"{path}/{img_name}", "rb") as file:
         files = {"photo": file}
         response = requests.post(url, params=payload, files=files)
     response.raise_for_status()
