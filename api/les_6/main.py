@@ -70,17 +70,18 @@ def upload_img_wall(url, group_id, path, img_name):
     response.raise_for_status()
     upload_attrs = response.json()
     check_vk_api_error(upload_attrs)
+    upload_attrs["vk_hash"] = upload_attrs.pop("hash")
     return upload_attrs
 
 
-def save_wall_img(url, group_id, token, api_version, photo, server, hash):
+def save_wall_img(url, group_id, token, api_version, photo, server, vk_hash):
     api_method = "photos.saveWallPhoto"
     payloads = {"group_id": group_id,
                 "access_token": token,
                 "v": api_version,
                 "photo": photo,
                 "server": server,
-                "hash": hash}
+                "hash": vk_hash}
     response = requests.get(url.format(api_method), params=payloads)
     response.raise_for_status()
     save_attrs = response.json()
